@@ -3,93 +3,151 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SHRM BASK Blank Chart Study</title>
+  <title>SHRM BASK — Interactive Chart</title>
   <style>
-    body{font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#f7fbff; color:#0b1220; padding:24px; text-align:center}
-    .container{max-width:1100px;margin:0 auto;background:white;padding:20px;border-radius:12px;box-shadow:0 6px 30px rgba(12,20,40,0.08)}
-    h1{font-size:24px;margin:0 0 16px}
-    .chart{position:relative;display:inline-block}
-    img{max-width:100%;height:auto;opacity:0.3}
-    .blank{position:absolute;transform:translate(-50%,-50%)}
-    input[type=text]{width:180px;padding:6px;border:1px solid #cbd5e1;border-radius:6px;font-size:12px;text-align:center}
-    .correct{background:#e6ffe6}
-    .incorrect{background:#ffe6e6}
-    .controls{margin:16px 0;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
-    button{background:#0b82ff;color:white;border:none;padding:10px 14px;border-radius:8px;cursor:pointer}
-    button.secondary{background:#e2e8f0;color:#0b1220}
+    :root{--w:950px;--h:768px}
+    body{font-family:Inter,system-ui,-apple-system,'Segoe UI',Roboto,Arial;margin:20px;background:#f7fbff;color:#0b1220}
+    .wrap{max-width:980px;margin:0 auto}
+    h1{font-size:22px;margin-bottom:6px}
+    p{margin-top:0;color:#475569}
+    .chart-stage{position:relative;width:var(--w);height:var(--h);background:url('bask-blank.png') center/contain no-repeat;border:1px solid #e2e8f0;border-radius:8px;margin-top:12px}
+    .hex-input{position:absolute;transform:translate(-50%,-50%);width:160px;padding:6px;border-radius:6px;border:1px solid #cbd5e1;text-align:center;font-size:13px;background:rgba(255,255,255,0.9)}
+    .hex-input.correct{box-shadow:0 0 0 3px rgba(16,185,129,0.12);border-color:#10b981}
+    .hex-input.wrong{box-shadow:0 0 0 3px rgba(239,68,68,0.12);border-color:#ef4444}
+    .controls{margin-top:12px;display:flex;gap:8px;flex-wrap:wrap}
+    button{background:#0b82ff;color:white;padding:10px 14px;border-radius:8px;border:none;cursor:pointer}
+    button.secondary{background:#e6eef8;color:#0b1220}
+    #score{margin-left:8px;font-weight:700;color:#0b1220}
+    .note{margin-top:10px;color:#475569;font-size:13px}
+    .footer{margin-top:14px;color:#64748b;font-size:13px}
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>SHRM BASK Blank Chart</h1>
-    <p>Fill in the terms directly on the chart where they belong. Use <strong>Check</strong> to grade yourself or <strong>Show Answers</strong> to reveal them.</p>
+  <div class="wrap">
+    <h1>SHRM BASK — Interactive Fillable Chart</h1>
+    <p>Save your blank chart image as <code>bask-blank.png</code> in the same folder as this file. Type each term directly onto the chart and click <strong>Check Answers</strong>. All inputs are hard-coded for a 950×768px image.</p>
 
     <div class="controls">
       <button id="checkBtn">Check Answers</button>
+      <button class="secondary" id="showBtn">Show Correct Answers</button>
       <button class="secondary" id="resetBtn">Reset</button>
-      <button class="secondary" id="showBtn">Show Answers</button>
+      <div id="score"></div>
     </div>
 
-    <div class="chart">
-      <img src="328110a9-42db-4488-bd68-7428f9909586.png" alt="SHRM BASK Chart" />
+    <div class="chart-stage" id="stage">
+      <!-- Behavioral Competencies - Leadership Cluster -->
+      <input class="hex-input" id="i1" data-answer="Leadership & Navigation" style="left:220px; top:120px">
+      <input class="hex-input" id="i2" data-answer="Ethical Practice" style="left:340px; top:120px">
 
-      <!-- Example placements (top-left for Leadership cluster, adjust coordinates as needed) -->
-      <input class="blank" style="top:15%; left:33%;" data-answer="Communication">
-      <input class="blank" style="top:8%; left:27%;" data-answer="Ethical Practice">
-      <input class="blank" style="top:22%; left:27%;" data-answer="Leadership & Navigation">
-      <input class="blank" style="top:15%; left:40%;" data-answer="Relationship Management">
-      <input class="blank" style="top:8%; left:47%;" data-answer="Global Mindset">
-      <input class="blank" style="top:22%; left:47%;" data-answer="Consultation">
-      <input class="blank" style="top:15%; left:54%;" data-answer="Business Acumen">
-      <input class="blank" style="top:22%; left:61%;" data-answer="Analytical Aptitude">
+      <!-- Interpersonal Cluster -->
+      <input class="hex-input" id="i3" data-answer="Relationship Management" style="left:140px; top:200px">
+      <input class="hex-input" id="i4" data-answer="Communication" style="left:260px; top:200px">
+      <input class="hex-input" id="i5" data-answer="Global & Cultural Effectiveness" style="left:380px; top:200px">
 
-      <!-- People cluster -->
-      <input class="blank" style="top:55%; left:28%;" data-answer="Learning & Development">
-      <input class="blank" style="top:62%; left:28%;" data-answer="Total Rewards">
-      <input class="blank" style="top:48%; left:28%;" data-answer="Talent Acquisition">
-      <input class="blank" style="top:41%; left:28%;" data-answer="HR Strategy">
-      <input class="blank" style="top:34%; left:28%;" data-answer="Employee Engagement & Retention">
+      <!-- Business Cluster -->
+      <input class="hex-input" id="i6" data-answer="Business Acumen" style="left:500px; top:120px">
+      <input class="hex-input" id="i7" data-answer="Consultation" style="left:620px; top:120px">
+      <input class="hex-input" id="i8" data-answer="Analytical Aptitude" style="left:740px; top:120px">
 
-      <!-- Organization cluster -->
-      <input class="blank" style="top:41%; left:72%;" data-answer="Structure of the HR Function">
-      <input class="blank" style="top:34%; left:72%;" data-answer="Organizational Effectiveness & Development">
-      <input class="blank" style="top:48%; left:72%;" data-answer="Workforce Management">
-      <input class="blank" style="top:55%; left:72%;" data-answer="Employee & Labor Relations">
-      <input class="blank" style="top:62%; left:72%;" data-answer="Technology Management">
+      <!-- People Domain -->
+      <input class="hex-input" id="i9" data-answer="HR Strategic Planning" style="left:140px; top:360px">
+      <input class="hex-input" id="i10" data-answer="Talent Acquisition" style="left:320px; top:330px">
+      <input class="hex-input" id="i11" data-answer="Employee Engagement & Retention" style="left:480px; top:330px">
+      <input class="hex-input" id="i12" data-answer="Learning & Development" style="left:640px; top:330px">
+      <input class="hex-input" id="i13" data-answer="Total Rewards" style="left:800px; top:330px">
 
-      <!-- Workplace cluster -->
-      <input class="blank" style="top:75%; left:40%;" data-answer="Managing a Global Workforce">
-      <input class="blank" style="top:82%; left:40%;" data-answer="Risk Management">
-      <input class="blank" style="top:89%; left:40%;" data-answer="U.S. Employment Law & Regulations">
-      <input class="blank" style="top:82%; left:60%;" data-answer="Corporate Social Responsibility">
+      <!-- Organization Domain -->
+      <input class="hex-input" id="i14" data-answer="Structure of the HR Function" style="left:140px; top:520px; width:200px">
+      <input class="hex-input" id="i15" data-answer="Organizational Effectiveness & Development" style="left:370px; top:460px; width:220px">
+      <input class="hex-input" id="i16" data-answer="Workforce Management" style="left:600px; top:460px">
+      <input class="hex-input" id="i17" data-answer="Employee & Labor Relations" style="left:740px; top:520px; width:200px">
+      <input class="hex-input" id="i18" data-answer="Technology Management" style="left:480px; top:520px">
+
+      <!-- Workplace Domain -->
+      <input class="hex-input" id="i19" data-answer="HR in the Global Context" style="left:260px; top:620px">
+      <input class="hex-input" id="i20" data-answer="Diversity, Equity & Inclusion" style="left:420px; top:620px; width:220px">
+      <input class="hex-input" id="i21" data-answer="Risk Management" style="left:620px; top:620px">
+      <input class="hex-input" id="i22" data-answer="Corporate Social Responsibility" style="left:780px; top:620px; width:200px">
+      <input class="hex-input" id="i23" data-answer="Employment Law & Regulations" style="left:500px; top:700px; width:260px">
+
+      <!-- Strategy Domain (center/bottom) -->
+      <input class="hex-input" id="i24" data-answer="HR Strategy" style="left:480px; top:270px">
     </div>
+
+    <div class="note">Notes: 1) Save this file in the same folder as <code>bask-blank.png</code>. 2) Inputs are case-insensitive. 3) For "Diversity, Equity & Inclusion" you may type "DEI" or the full phrase (checker accepts common variants).</div>
+    <div class="footer">Tip: open the file in your browser locally (double-click <code>index.html</code>) or host on GitHub Pages.</div>
   </div>
 
   <script>
-    function normalize(s){return (s||'').trim().toLowerCase();}
-    function checkAnswers(){
-      document.querySelectorAll('input').forEach(input=>{
-        const val = normalize(input.value);
-        const ans = normalize(input.dataset.answer);
-        if(val === ans){input.classList.add('correct');input.classList.remove('incorrect');}
-        else{input.classList.add('incorrect');input.classList.remove('correct');}
+    // Accept some common variants
+    function normalize(s){return (s||'').replace(/[\u2018\u2019\u201C\u201D]/g,'').replace(/\s+/g,' ').trim().toLowerCase();}
+    function isAcceptable(input, answer){
+      const nIn = normalize(input);
+      const nAns = normalize(answer);
+      if(nAns === 'diversity, equity & inclusion'){
+        const ok = ['dei','diversity equity inclusion','diversity, equity and inclusion','diversity equity & inclusion','diversity equity & inclusion (dei)'];
+        if(ok.includes(nIn)) return true;
+      }
+      if(nAns === 'employment law & regulations'){
+        const ok = ['employment law','employment law & regulations','employment laws & regulations','employment law and regulations'];
+        if(ok.includes(nIn)) return true;
+      }
+      if(nAns === 'leadership & navigation'){
+        const ok = ['leadership','leadership navigation','leadership and navigation'];
+        if(ok.includes(nIn)) return true;
+      }
+      return nIn === nAns;
+    }
+
+    function checkAll(){
+      const inputs = Array.from(document.querySelectorAll('.hex-input'));
+      let correct=0;
+      inputs.forEach(inp=>{
+        const val = inp.value || '';
+        const ans = inp.dataset.answer || '';
+        if(isAcceptable(val, ans)){
+          inp.classList.add('correct'); inp.classList.remove('wrong'); correct++;
+        } else { inp.classList.add('wrong'); inp.classList.remove('correct'); }
       });
+      const score = document.getElementById('score');
+      score.textContent = `${correct} / ${inputs.length} correct`;
     }
-    function reset(){
-      document.querySelectorAll('input').forEach(input=>{input.value='';input.classList.remove('correct','incorrect');});
-    }
-    let shown=false;
+
     function showAnswers(){
-      shown=!shown;
-      document.querySelectorAll('input').forEach(input=>{
-        if(shown){input.value=input.dataset.answer;input.classList.add('correct');}
-        else{input.value='';input.classList.remove('correct','incorrect');}
-      });
-      document.getElementById('showBtn').textContent=shown?'Hide Answers':'Show Answers';
+      const inputs = Array.from(document.querySelectorAll('.hex-input'));
+      let showing = document.getElementById('showBtn').dataset.showing === 'true';
+      if(!showing){
+        inputs.forEach(inp=>{ inp.value = inp.dataset.answer; inp.classList.add('correct'); inp.classList.remove('wrong'); });
+        document.getElementById('showBtn').textContent = 'Hide Correct Answers';
+        document.getElementById('showBtn').dataset.showing = 'true';
+      } else {
+        inputs.forEach(inp=>{ inp.value = ''; inp.classList.remove('correct','wrong'); });
+        document.getElementById('showBtn').textContent = 'Show Correct Answers';
+        document.getElementById('showBtn').dataset.showing = 'false';
+        document.getElementById('score').textContent = '';
+      }
     }
-    document.getElementById('checkBtn').addEventListener('click', checkAnswers);
-    document.getElementById('resetBtn').addEventListener('click', reset);
+
+    function resetAll(){
+      document.querySelectorAll('.hex-input').forEach(inp=>{ inp.value=''; inp.classList.remove('correct','wrong'); });
+      document.getElementById('score').textContent = '';
+      document.getElementById('showBtn').dataset.showing = 'false';
+      document.getElementById('showBtn').textContent = 'Show Correct Answers';
+    }
+
+    document.getElementById('checkBtn').addEventListener('click', checkAll);
     document.getElementById('showBtn').addEventListener('click', showAnswers);
+    document.getElementById('resetBtn').addEventListener('click', resetAll);
+
+    // Allow Enter to jump to next input
+    document.addEventListener('keydown', e=>{
+      if(e.key === 'Enter' && document.activeElement && document.activeElement.classList.contains('hex-input')){
+        e.preventDefault();
+        const inputs = Array.from(document.querySelectorAll('.hex-input'));
+        const i = inputs.indexOf(document.activeElement);
+        if(i >= 0 && i < inputs.length-1) inputs[i+1].focus();
+      }
+    });
   </script>
 </body>
 </html>

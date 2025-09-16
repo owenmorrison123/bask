@@ -3,27 +3,26 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>SHRM BASK Chart Study</title>
+  <title>SHRM BASK Blank Chart Study</title>
   <style>
-    body{font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#f7fbff; color:#0b1220; padding:24px}
-    .container{max-width:1000px;margin:0 auto;background:white;padding:20px;border-radius:12px;box-shadow:0 6px 30px rgba(12,20,40,0.08)}
+    body{font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#f7fbff; color:#0b1220; padding:24px; text-align:center}
+    .container{max-width:1100px;margin:0 auto;background:white;padding:20px;border-radius:12px;box-shadow:0 6px 30px rgba(12,20,40,0.08)}
     h1{font-size:24px;margin:0 0 16px}
-    table{border-collapse:collapse;width:100%;margin-top:16px}
-    th, td{border:1px solid #cbd5e1;padding:10px;text-align:left;vertical-align:top}
-    th{background:#f1f5f9;font-weight:600}
-    input[type=text]{width:100%;padding:6px;border:1px solid #cbd5e1;border-radius:6px;font-size:14px}
-    .controls{margin:16px 0;display:flex;gap:10px;flex-wrap:wrap}
-    button{background:#0b82ff;color:white;border:none;padding:10px 14px;border-radius:8px;cursor:pointer}
-    button.secondary{background:#e2e8f0;color:#0b1220}
+    .chart{position:relative;display:inline-block}
+    img{max-width:100%;height:auto;opacity:0.3}
+    .blank{position:absolute;transform:translate(-50%,-50%)}
+    input[type=text]{width:180px;padding:6px;border:1px solid #cbd5e1;border-radius:6px;font-size:12px;text-align:center}
     .correct{background:#e6ffe6}
     .incorrect{background:#ffe6e6}
-    .footer{margin-top:16px;font-size:13px;color:#475569}
+    .controls{margin:16px 0;display:flex;gap:10px;flex-wrap:wrap;justify-content:center}
+    button{background:#0b82ff;color:white;border:none;padding:10px 14px;border-radius:8px;cursor:pointer}
+    button.secondary{background:#e2e8f0;color:#0b1220}
   </style>
 </head>
 <body>
   <div class="container">
-    <h1>SHRM BASK Chart — Fill in the Terms</h1>
-    <p>Type each SHRM BASK term in its correct place. Click <strong>Check Answers</strong> to see results.</p>
+    <h1>SHRM BASK Blank Chart</h1>
+    <p>Fill in the terms directly on the chart where they belong. Use <strong>Check</strong> to grade yourself or <strong>Show Answers</strong> to reveal them.</p>
 
     <div class="controls">
       <button id="checkBtn">Check Answers</button>
@@ -31,56 +30,63 @@
       <button class="secondary" id="showBtn">Show Answers</button>
     </div>
 
-    <table>
-      <tr><th colspan="2">Behavioral Competencies</th></tr>
-      <tr><td>Leadership Cluster</td><td><input data-answer="Leadership & Navigation"><br><input data-answer="Ethical Practice"></td></tr>
-      <tr><td>Interpersonal Cluster</td><td><input data-answer="Relationship Management"><br><input data-answer="Communication"><br><input data-answer="Global & Cultural Effectiveness"></td></tr>
-      <tr><td>Business Cluster</td><td><input data-answer="Business Acumen"><br><input data-answer="Consultation"><br><input data-answer="Analytical Aptitude"></td></tr>
+    <div class="chart">
+      <img src="328110a9-42db-4488-bd68-7428f9909586.png" alt="SHRM BASK Chart" />
 
-      <tr><th colspan="2">HR Knowledge Domains</th></tr>
-      <tr><td>People</td><td><input data-answer="HR Strategic Planning"><br><input data-answer="Talent Acquisition"><br><input data-answer="Employee Engagement & Retention"><br><input data-answer="Learning & Development"><br><input data-answer="Total Rewards"></td></tr>
-      <tr><td>Organization</td><td><input data-answer="Structure of the HR Function"><br><input data-answer="Organizational Effectiveness & Development"><br><input data-answer="Workforce Management"><br><input data-answer="Employee & Labor Relations"><br><input data-answer="Technology Management"></td></tr>
-      <tr><td>Workplace</td><td><input data-answer="HR in the Global Context"><br><input data-answer="Diversity, Equity & Inclusion"><br><input data-answer="Risk Management"><br><input data-answer="Corporate Social Responsibility"><br><input data-answer="Employment Law & Regulations"></td></tr>
-      <tr><td>Strategy</td><td><input data-answer="HR Strategy"></td></tr>
-    </table>
+      <!-- Example placements (top-left for Leadership cluster, adjust coordinates as needed) -->
+      <input class="blank" style="top:15%; left:33%;" data-answer="Communication">
+      <input class="blank" style="top:8%; left:27%;" data-answer="Ethical Practice">
+      <input class="blank" style="top:22%; left:27%;" data-answer="Leadership & Navigation">
+      <input class="blank" style="top:15%; left:40%;" data-answer="Relationship Management">
+      <input class="blank" style="top:8%; left:47%;" data-answer="Global Mindset">
+      <input class="blank" style="top:22%; left:47%;" data-answer="Consultation">
+      <input class="blank" style="top:15%; left:54%;" data-answer="Business Acumen">
+      <input class="blank" style="top:22%; left:61%;" data-answer="Analytical Aptitude">
 
-    <div class="footer">Save this file as <code>index.html</code> and open in your browser. You can type directly into the chart to test your memory.</div>
+      <!-- People cluster -->
+      <input class="blank" style="top:55%; left:28%;" data-answer="Learning & Development">
+      <input class="blank" style="top:62%; left:28%;" data-answer="Total Rewards">
+      <input class="blank" style="top:48%; left:28%;" data-answer="Talent Acquisition">
+      <input class="blank" style="top:41%; left:28%;" data-answer="HR Strategy">
+      <input class="blank" style="top:34%; left:28%;" data-answer="Employee Engagement & Retention">
+
+      <!-- Organization cluster -->
+      <input class="blank" style="top:41%; left:72%;" data-answer="Structure of the HR Function">
+      <input class="blank" style="top:34%; left:72%;" data-answer="Organizational Effectiveness & Development">
+      <input class="blank" style="top:48%; left:72%;" data-answer="Workforce Management">
+      <input class="blank" style="top:55%; left:72%;" data-answer="Employee & Labor Relations">
+      <input class="blank" style="top:62%; left:72%;" data-answer="Technology Management">
+
+      <!-- Workplace cluster -->
+      <input class="blank" style="top:75%; left:40%;" data-answer="Managing a Global Workforce">
+      <input class="blank" style="top:82%; left:40%;" data-answer="Risk Management">
+      <input class="blank" style="top:89%; left:40%;" data-answer="U.S. Employment Law & Regulations">
+      <input class="blank" style="top:82%; left:60%;" data-answer="Corporate Social Responsibility">
+    </div>
   </div>
 
   <script>
     function normalize(s){return (s||'').trim().toLowerCase();}
-
     function checkAnswers(){
       document.querySelectorAll('input').forEach(input=>{
         const val = normalize(input.value);
         const ans = normalize(input.dataset.answer);
-        if(val === ans){
-          input.classList.add('correct');
-          input.classList.remove('incorrect');
-        } else {
-          input.classList.add('incorrect');
-          input.classList.remove('correct');
-        }
+        if(val === ans){input.classList.add('correct');input.classList.remove('incorrect');}
+        else{input.classList.add('incorrect');input.classList.remove('correct');}
       });
     }
-
     function reset(){
-      document.querySelectorAll('input').forEach(input=>{
-        input.value='';
-        input.classList.remove('correct','incorrect');
-      });
+      document.querySelectorAll('input').forEach(input=>{input.value='';input.classList.remove('correct','incorrect');});
     }
-
     let shown=false;
     function showAnswers(){
       shown=!shown;
       document.querySelectorAll('input').forEach(input=>{
-        if(shown){input.value=input.dataset.answer; input.classList.add('correct');}
-        else{input.value=''; input.classList.remove('correct','incorrect');}
+        if(shown){input.value=input.dataset.answer;input.classList.add('correct');}
+        else{input.value='';input.classList.remove('correct','incorrect');}
       });
-      document.getElementById('showBtn').textContent = shown? 'Hide Answers':'Show Answers';
+      document.getElementById('showBtn').textContent=shown?'Hide Answers':'Show Answers';
     }
-
     document.getElementById('checkBtn').addEventListener('click', checkAnswers);
     document.getElementById('resetBtn').addEventListener('click', reset);
     document.getElementById('showBtn').addEventListener('click', showAnswers);

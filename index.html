@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>SHRM BASK Study Checker</title>
+  <style>
+    body{font-family: Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial; background:#f7fbff; color:#0b1220; padding:24px}
+    .container{max-width:900px;margin:0 auto;background:white;padding:20px;border-radius:12px;box-shadow:0 6px 30px rgba(12,20,40,0.08)}
+    h1{font-size:22px;margin:0 0 12px}
+    p{margin:6px 0 18px;color:#334155}
+    .grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+    .card{border:1px solid #e6eef8;padding:12px;border-radius:8px;background:#fbfdff}
+    label{display:block;font-weight:600;font-size:13px;margin-bottom:6px}
+    input[type=text]{width:100%;padding:8px;border:1px solid #cbd5e1;border-radius:6px;font-size:14px}
+    .controls{display:flex;gap:8px;flex-wrap:wrap;margin:12px 0}
+    button{background:#0b82ff;color:white;border:none;padding:10px 12px;border-radius:8px;cursor:pointer}
+    button.secondary{background:#e2e8f0;color:#0b1220}
+    .result{margin-top:8px;font-weight:700}
+    .success{color:green}
+    .fail{color:#ff3b3b}
+    .right{border-color:green}
+    .wrong{border-color:#ff3b3b}
+    .small{font-size:13px;color:#64748b}
+    .note{margin-top:12px;color:#475569}
+    .answer-btn{background:transparent;border:1px dashed #cbd5e1;padding:8px;border-radius:8px}
+    .footer{margin-top:14px;font-size:13px;color:#475569}
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>SHRM BASK — Fill &amp; Check</h1>
+    <p>Type the single-word or phrase term for each blank. Answers are not case-sensitive. Click <strong>Check All</strong> to grade, or <strong>Show Answers</strong> to reveal them.</p>
+
+    <div class="controls">
+      <button id="checkBtn">Check All</button>
+      <button class="secondary" id="resetBtn">Reset</button>
+      <button class="secondary" id="showBtn">Show Answers</button>
+      <button class="secondary" id="shuffleBtn">Shuffle Order</button>
+    </div>
+
+    <div id="sheet" class="grid">
+      <!-- Cards inserted by JS -->
+    </div>
+
+    <div class="note">Tip: Use <em>HR Strategic Planning</em> exactly as a two-word phrase (space allowed). For DEI use the full phrase <em>Diversity, Equity &amp; Inclusion (DEI)</em> if you want — the checker will accept partial &amp; acronym forms.</div>
+    <div class="footer">Download: Save this file as <code>index.html</code> and push to your GitHub repo. Works locally in any browser.</div>
+  </div>
+
+  <script>
+    // The 24 terms (exact answers used for checking)
+    const TERMS = [
+      'Leadership & Navigation',
+      'Ethical Practice',
+      'Relationship Management',
+      'Communication',
+      'Global & Cultural Effectiveness',
+      'Business Acumen',
+      'Consultation',
+      'Analytical Aptitude',
+      'HR Strategic Planning',
+      'Talent Acquisition',
+      'Employee Engagement & Retention',
+      'Learning & Development',
+      'Total Rewards',
+      'Structure of the HR Function',
+      'Organizational Effectiveness & Development',
+      'Workforce Management',
+      'Employee & Labor Relations',
+      'Technology Management',
+      'HR in the Global Context',
+      'Diversity, Equity & Inclusion',
+      'Risk Management',
+      'Corporate Social Responsibility',
+      'Employment Law & Regulations',
+      'HR Strategy'
+    ];
+
+    // Normalize function for comparison
+    function normalize(s){
+      return s.replace(/\s+/g,' ').trim().toLowerCase().replace(/[\u2018\u2019\u201C\u201D]/g, "");
+    }
+
+    // Accept some common variants for DEI and Employment Law
+    function isAcceptable(input, answer){
+      const nIn = normalize(input);
+      const nAns = normalize(answer);
+      if(nAns === 'diversity, equity & inclusion'){
+        // accept: diversity equity inclusion, dei, diversity, equity and inclusion
+        if(['dei','diversity equity inclusion','diversity, equity and inclusion','diversity equity & inclusion'].includes(nIn)) return true;
+      }
+      if(nAns === 'employment law & regulations'){
+        if(['employment law','employment law and regulations','employment law & regulations','employment laws & regulations'].includes(nIn)) return true;
+      }
+      if(nAns === 'leadership & navigation'){
+        if(['leadership','leadership and navigation','leadership & navigation'].includes(nIn)) return true;
+      }
+      // default strict compare
+      return nIn === nAns;
+    }
+
+    // Build UI cards
+    const sheet = document.getElementById('sheet');
+    let order = TERMS.map((t,i)=>i);
+
+    function render(){
+      sheet.innerHTML = '';
+      order.forEach((idx, pos)=>{
+        const term = TERMS[idx];
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.innerHTML = `
+          <label>${pos+1}.</label>
+          <input type="text" data-answer="${term}" id="i-${idx}" placeholder="Type term...">
+          <div class="result" id="r-${idx}"></div>
+        `;
+        sheet.appendChild(card);
+      });
+    }
+
+    render();
+
+    document.getElementById('checkBtn').addEventListener('click', ()=>{
+      let correct = 0;
+      TERMS.forEach((ans, idx)=>{
+        const input = document.getElementById('i-'+idx);
+        const res = document.getElementById('r-'+idx);
+        if(!input) return; // in case shuffled differently
+        const val = input.value || '';
+        if(isAcceptable(val, ans)){
+          input.classList.remove('wrong'); input.classList.add('right');
+          res.innerHTML = '<span class="success">Correct ✓</span>';
+          correct++;
+        } else {
+          input.classList.remove('right'); input.classList.add('wrong');
+          res.innerHTML = '<span class="fail">Incorrect ✗</span>';
+        }
+      });
+      alert(`You got ${correct} / ${TERMS.length} correct.`);
+    });
+
+    document.getElementById('resetBtn').addEventListener('click', ()=>{
+      TERMS.forEach((ans, idx)=>{
+        const input = document.getElementById('i-'+idx);
+        const res = document.getElementById('r-'+idx);
+        if(input){input.value=''; input.classList.remove('right','wrong');}
+        if(res) res.innerHTML='';
+      });
+    });
+
+    let shown = false;
+    document.getElementById('showBtn').addEventListener('click', ()=>{
+      shown = !shown;
+      if(shown){
+        TERMS.forEach((ans, idx)=>{
+          const input = document.getElementById('i-'+idx);
+          const res = document.getElementById('r-'+idx);
+          if(input) { input.value = ans; input.classList.remove('wrong'); input.classList.add('right'); }
+          if(res) res.innerHTML = '<span class="success">Answer shown</span>';
+        });
+        document.getElementById('showBtn').textContent = 'Hide Answers';
+      } else {
+        TERMS.forEach((ans, idx)=>{
+          const input = document.getElementById('i-'+idx);
+          const res = document.getElementById('r-'+idx);
+          if(input) { input.value = ''; input.classList.remove('right','wrong'); }
+          if(res) res.innerHTML = '';
+        });
+        document.getElementById('showBtn').textContent = 'Show Answers';
+      }
+    });
+
+    document.getElementById('shuffleBtn').addEventListener('click', ()=>{
+      // simple Fisher-Yates shuffle
+      for (let i = order.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [order[i], order[j]] = [order[j], order[i]];
+      }
+      render();
+    });
+
+    // Allow Enter to move to next input
+    document.addEventListener('keydown', (e)=>{
+      if(e.key === 'Enter'){
+        const active = document.activeElement;
+        if(active && active.tagName === 'INPUT'){
+          e.preventDefault();
+          const inputs = Array.from(document.querySelectorAll('input[type=text]'));
+          const idx = inputs.indexOf(active);
+          if(idx >= 0 && idx < inputs.length-1) inputs[idx+1].focus();
+        }
+      }
+    });
+  </script>
+</body>
+</html>
